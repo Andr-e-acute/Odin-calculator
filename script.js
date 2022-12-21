@@ -1,3 +1,34 @@
+let currentValue='';
+let previousValue='';
+
+const display = document.querySelector("#display");
+const numbButts = document.querySelectorAll(".number");
+const operatorButts = document.querySelectorAll(".operator")
+
+//EventHandlers for buttons
+numbButts.forEach((num)=>num.addEventListener("click",(e)=>{
+  handleNumber(e.target.textContent)
+}))
+
+operatorButts.forEach((operator)=>operator.addEventListener("click",(e)=>{
+  console.log(e)
+}))
+
+
+//helper
+function handleNumber(num){
+if(currentValue.length<10){
+  currentValue =currentValue.concat("",num)
+  updateDisplay()
+}
+
+}
+function updateDisplay(){
+  display.textContent = currentValue ;
+}
+
+
+//Math functions
 function add(num1, num2) {
   return num1 + num2;
 }
@@ -32,4 +63,5 @@ function operate(operator, num1, num2) {
     console.log(`operate don't has the case: "${operator}"`)
       break;
   }
+  
 }

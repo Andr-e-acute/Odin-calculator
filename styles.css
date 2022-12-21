@@ -1,0 +1,20 @@
+#calc{
+    max-width: 250px;
+    background-color: gray;
+    border-radius: 5px;
+    padding: 10px 0px;
+}
+#display{
+    width:80%;
+    background-color: lightgray;
+    margin:auto;
+}
+#butts{
+    padding-top:10px;
+    width: 80%;
+    margin:auto;
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-template-rows: repeat(5,auto);
+    gap:2px;
+}
