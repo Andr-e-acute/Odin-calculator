@@ -1,30 +1,55 @@
+const digits=12;
 let currentValue='';
 let previousValue='';
+let currentOperator="";
+let displayContent="";
 
 const display = document.querySelector("#display");
 const numbButts = document.querySelectorAll(".number");
 const operatorButts = document.querySelectorAll(".operator")
-
+const equalButt =document.querySelector("#equal");
 //EventHandlers for buttons
 numbButts.forEach((num)=>num.addEventListener("click",(e)=>{
   handleNumber(e.target.textContent)
 }))
 
 operatorButts.forEach((operator)=>operator.addEventListener("click",(e)=>{
-  console.log(e)
+ handleOperator(e.target)
 }))
+
+equalButt.addEventListener("click",handleEqual);
 
 
 //helper
 function handleNumber(num){
-if(currentValue.length<10){
-  currentValue =currentValue.concat("",num)
-  updateDisplay()
+if(currentValue.length>digits){
+  return
+}
+currentValue =currentValue.concat("",num)
+updateDisplay(currentValue)
 }
 
+function handleOperator(operator){
+  currentOperator=operator.value;
+  previousValue=currentValue;
+  currentValue="";
+  updateDisplay(operator.textContent);
 }
-function updateDisplay(){
-  display.textContent = currentValue ;
+function handleEqual(){
+  if(currentValue&&previousValue&&currentOperator){
+    let result=operate(currentOperator,previousValue,currentValue)
+    previousValue="";
+    currentOperator="";
+
+    // TODO function for rounding decimalPlace to the length of digits
+    currentValue=result;
+    updateDisplay(currentValue)
+  }
+  
+}
+function updateDisplay(str){
+  console.log(str.length)
+  display.textContent = str ;
 }
 
 
