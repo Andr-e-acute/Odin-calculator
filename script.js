@@ -8,6 +8,7 @@ const display = document.querySelector("#display");
 const numbButts = document.querySelectorAll(".number");
 const operatorButts = document.querySelectorAll(".operator")
 const equalButt =document.querySelector("#equal");
+
 //EventHandlers for buttons
 numbButts.forEach((num)=>num.addEventListener("click",(e)=>{
   handleNumber(e.target.textContent)
@@ -22,33 +23,38 @@ equalButt.addEventListener("click",handleEqual);
 
 //helper
 function handleNumber(num){
+  //TODO move check to updateDisplay
 if(currentValue.length>digits){
   return
 }
-currentValue =currentValue.concat("",num)
+
+currentValue = currentValue.concat("",num)
 updateDisplay(currentValue)
 }
 
 function handleOperator(operator){
+  //user chains operators together without pressing equal
+ if(currentOperator){
+  handleEqual()
+ }
   currentOperator=operator.value;
   previousValue=currentValue;
   currentValue="";
-  updateDisplay(operator.textContent);
+  updateDisplay(previousValue);
 }
 function handleEqual(){
   if(currentValue&&previousValue&&currentOperator){
-    let result=operate(currentOperator,previousValue,currentValue)
+    currentValue=operate(currentOperator,previousValue,currentValue)
     previousValue="";
     currentOperator="";
 
-    // TODO function for rounding decimalPlace to the length of digits
-    currentValue=result;
     updateDisplay(currentValue)
   }
   
 }
 function updateDisplay(str){
-  console.log(str.length)
+  // TODO check for length of display convert to str
+  // console.log(str.length)
   display.textContent = str ;
 }
 
