@@ -20,7 +20,7 @@ numbButts.forEach((num) =>
 
 operatorButts.forEach((operator) =>
   operator.addEventListener("click", (e) => {
-    handleOperator(e.target);
+    handleOperator(e.target.value);
   })
 );
 
@@ -29,16 +29,50 @@ wipeButt.addEventListener("click", clear);
 backspaceButt.addEventListener("click", deleteLast);
 decimalButt.addEventListener("click", addDecimal);
 
-//helper
+window.addEventListener("keydown", handleKeyboardInput);
+
+function handleKeyboardInput(e) {
+  console.log(e.key);
+  if (!isNaN(e.key)) {
+    handleNumber(e.key);
+  }
+  switch (e.key) {
+    case ".":
+      addDecimal();
+      break;
+    case "+":
+      handleOperator("add");
+      break;
+    case "-":
+      handleOperator("subtract");
+      break;
+    case "*":
+      handleOperator("multiply");
+      break;
+    case "/":
+      handleOperator("divide");
+      break;
+    case "=":
+      handleEqual();
+      break;
+    case "Enter":
+      handleEqual();
+      e.preventDefault();
+      break;
+    case "Backspace":
+      deleteLast();
+      break;
+    case "Escape":
+      clear();
+      break;
+    default:
+      break;
+  }
+}
+
 function handleNumber(num) {
-  //TODO move check to updateDisplay
-  // if (currentValue.length > digits) {
-  //   return;
-  // }
   if (currentValue === "0") {
-    
     currentValue = num;
-  
   } else {
     currentValue = currentValue.concat("", num);
   }
@@ -57,7 +91,7 @@ function handleOperator(operator) {
   if (currentOperator) {
     handleEqual();
   }
-  currentOperator = operator.value;
+  currentOperator = operator;
   previousValue = currentValue;
   currentValue = "0";
   updateDisplay(previousValue);
@@ -99,7 +133,7 @@ function updateDisplay(str) {
     currentValue = "0";
     previousValue = "0";
     display.textContent = str;
-    return
+    return;
   }
 
   let roundDigits = digits - 2;
