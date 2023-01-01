@@ -9,7 +9,8 @@ const numbButts = document.querySelectorAll(".number");
 const operatorButts = document.querySelectorAll(".operator");
 const equalButt = document.querySelector("#equal");
 const wipeButt = document.querySelector("#clear");
-const backspaceButt =document.querySelector("#backspace")
+const backspaceButt =document.querySelector("#backspace") 
+const decimalButt = document.querySelector("decimal")
 
 //EventHandlers for buttons
 numbButts.forEach((num) =>
@@ -42,15 +43,18 @@ function handleNumber(num) {
 function handleOperator(operator) {
   //user chains operators together without pressing equal
   if (currentOperator) {
+    console.log("there is a currenOperator")
     handleEqual();
   }
   currentOperator = operator.value;
   previousValue = currentValue;
-  currentValue = "";
+  currentValue = "0";
   updateDisplay(previousValue);
 }
 function handleEqual() {
   if (currentValue && previousValue && currentOperator) {
+    // console.log("handlequalif")
+    // console.log(currentValue)
     currentValue = operate(currentOperator, previousValue, currentValue).toString();
     previousValue = "";
     currentOperator = "";
