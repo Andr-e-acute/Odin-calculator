@@ -2,14 +2,14 @@ const digits = 12;
 let currentValue = "";
 let previousValue = "";
 let currentOperator = "";
-let displayContent = "0";
+
 
 const display = document.querySelector("#display");
 const numbButts = document.querySelectorAll(".number");
 const operatorButts = document.querySelectorAll(".operator");
 const equalButt = document.querySelector("#equal");
 const wipeButt = document.querySelector("#clear");
-
+const backspaceButt =document.querySelector("#backspace")
 
 //EventHandlers for buttons
 numbButts.forEach((num) =>
@@ -26,6 +26,7 @@ operatorButts.forEach((operator) =>
 
 equalButt.addEventListener("click", handleEqual);
 wipeButt.addEventListener("click", clear);
+backspaceButt.addEventListener("click", deleteLast)
 
 //helper
 function handleNumber(num) {
@@ -50,19 +51,29 @@ function handleOperator(operator) {
 }
 function handleEqual() {
   if (currentValue && previousValue && currentOperator) {
-    currentValue = operate(currentOperator, previousValue, currentValue);
+    currentValue = operate(currentOperator, previousValue, currentValue).toString();
     previousValue = "";
     currentOperator = "";
 
     updateDisplay(currentValue);
   }
 }
+function deleteLast(){
+  console.log(typeof currentValue)
+   if(currentValue.length==1){
+    currentValue="0";
+  }
+  else{
+    currentValue=currentValue.slice(0,currentValue.length-1)
+  }
+  updateDisplay(currentValue)
+}
 function clear(){
- currentValue = "";
+ currentValue = "0";
  previousValue = "";
  currentOperator = "";
- displayContent = "0";
- updateDisplay(displayContent)
+ 
+ updateDisplay(currentValue)
 }
 function updateDisplay(str) {
   //when it can't convert do a number display the content should only be the
