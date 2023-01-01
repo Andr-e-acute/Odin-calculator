@@ -1,21 +1,53 @@
+
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+@font-face {
+    font-family: "SegmentDisplay";
+    src: url("./fonts/DSEG14Classic-Bold.woff2");
+}
+
 #calc{
-    max-width: 250px;
+    width: 250px;
     background-color: gray;
-    border-radius: 5px;
-    padding: 10px 0px;
+    border-radius: 10px;
+    padding: 20px 0px;
 }
 #display{
-    width:80%;
+    width:200px;
     background-color: lightgray;
     margin:auto;
     text-align: right;
+    font-family: "SegmentDisplay"; 
+    font-size: 1.5rem;
+    padding: 10px 1px 8px 1px;
+    border-radius: 4px;
+    border-bottom: 4px solid rgb(189, 185, 185);
 }
 #butts{
     padding-top:10px;
-    width: 80%;
+    width: 200px;
+   
     margin:auto;
     display: grid;
-    grid-template-columns: repeat(4,auto);
-    grid-template-rows: repeat(5,auto);
+    grid-template-columns: repeat(4,50px);
+    grid-template-rows: repeat(5,40px);
     gap:2px;
+}
+ .butt{
+  border-radius: 4px;
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    border-bottom: 4px solid rgb(222, 222, 222);
+} 
+
+#equal{
+    background-color: orange;
+    border-bottom: 4px solid rgb(187, 124, 5);
+    grid-row: 4/span 2;
+    grid-column: 4;
+}
+#zero{
+    grid-column: 1/span 2;
 }
