@@ -10,6 +10,7 @@ const operatorButts = document.querySelectorAll(".operator");
 const equalButt = document.querySelector("#equal");
 const wipeButt = document.querySelector("#clear");
 
+
 //EventHandlers for buttons
 numbButts.forEach((num) =>
   num.addEventListener("click", (e) => {
@@ -64,7 +65,14 @@ function clear(){
  updateDisplay(displayContent)
 }
 function updateDisplay(str) {
-  
+  //when it can't convert do a number display the content should only be the
+  //case for division by null
+  if (!Number(str)){
+    currentValue="0";
+    previousValue="0";
+    return display.textContent=str
+  }
+
   let roundDigits = digits - 2;
   let tempDisplay = Math.round(str * roundDigits ** 10) / roundDigits ** 10;
   tempDisplay = tempDisplay.toString();
@@ -86,6 +94,9 @@ function multiply(num1, num2) {
   return num1 * num2;
 }
 function divide(num1, num2) {
+  if(num1==0){
+    return "don't do this"
+  }
   return num1 / num2;
 }
 
