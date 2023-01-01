@@ -1,4 +1,4 @@
-const digits = 10;
+const digits = 11;
 let currentValue = "";
 let previousValue = "";
 let currentOperator = "";
