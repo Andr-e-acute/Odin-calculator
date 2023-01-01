@@ -1,16 +1,15 @@
-const digits = 12;
+const digits = 22;
 let currentValue = "";
 let previousValue = "";
 let currentOperator = "";
-
 
 const display = document.querySelector("#display");
 const numbButts = document.querySelectorAll(".number");
 const operatorButts = document.querySelectorAll(".operator");
 const equalButt = document.querySelector("#equal");
 const wipeButt = document.querySelector("#clear");
-const backspaceButt =document.querySelector("#backspace") 
-const decimalButt = document.querySelector("decimal")
+const backspaceButt = document.querySelector("#backspace");
+const decimalButt = document.querySelector("#decimal");
 
 //EventHandlers for buttons
 numbButts.forEach((num) =>
@@ -27,23 +26,35 @@ operatorButts.forEach((operator) =>
 
 equalButt.addEventListener("click", handleEqual);
 wipeButt.addEventListener("click", clear);
-backspaceButt.addEventListener("click", deleteLast)
+backspaceButt.addEventListener("click", deleteLast);
+decimalButt.addEventListener("click", addDecimal);
 
 //helper
 function handleNumber(num) {
   //TODO move check to updateDisplay
-  if (currentValue.length > digits) {
-    return;
+  // if (currentValue.length > digits) {
+  //   return;
+  // }
+  if (currentValue === "0") {
+    
+    currentValue = num;
+  
+  } else {
+    currentValue = currentValue.concat("", num);
   }
-
-  currentValue = currentValue.concat("", num);
   updateDisplay(currentValue);
+}
+function addDecimal() {
+  if (!currentValue.includes(".")) {
+    currentValue = currentValue.concat("", ".");
+
+    display.textContent = currentValue;
+  }
 }
 
 function handleOperator(operator) {
   //user chains operators together without pressing equal
   if (currentOperator) {
-    console.log("there is a currenOperator")
     handleEqual();
   }
   currentOperator = operator.value;
@@ -53,39 +64,42 @@ function handleOperator(operator) {
 }
 function handleEqual() {
   if (currentValue && previousValue && currentOperator) {
-    // console.log("handlequalif")
-    // console.log(currentValue)
-    currentValue = operate(currentOperator, previousValue, currentValue).toString();
+    currentValue = operate(
+      currentOperator,
+      previousValue,
+      currentValue
+    ).toString();
     previousValue = "";
     currentOperator = "";
 
     updateDisplay(currentValue);
   }
 }
-function deleteLast(){
-  console.log(typeof currentValue)
-   if(currentValue.length==1){
-    currentValue="0";
+function deleteLast() {
+  console.log(typeof currentValue);
+  if (currentValue.length == 1) {
+    currentValue = "0";
+  } else {
+    currentValue = currentValue.slice(0, currentValue.length - 1);
   }
-  else{
-    currentValue=currentValue.slice(0,currentValue.length-1)
-  }
-  updateDisplay(currentValue)
+  updateDisplay(currentValue);
 }
-function clear(){
- currentValue = "0";
- previousValue = "";
- currentOperator = "";
- 
- updateDisplay(currentValue)
+function clear() {
+  currentValue = "0";
+  previousValue = "";
+  currentOperator = "";
+
+  updateDisplay(currentValue);
 }
 function updateDisplay(str) {
   //when it can't convert do a number display the content should only be the
   //case for division by null
-  if (!Number(str)){
-    currentValue="0";
-    previousValue="0";
-    return display.textContent=str
+
+  if (isNaN(str)) {
+    currentValue = "0";
+    previousValue = "0";
+    display.textContent = str;
+    return
   }
 
   let roundDigits = digits - 2;
@@ -93,8 +107,9 @@ function updateDisplay(str) {
   tempDisplay = tempDisplay.toString();
 
   if (tempDisplay.length > digits) {
-    tempDisplay =tempDisplay.slice(0,digits)
+    tempDisplay = tempDisplay.slice(0, digits);
   }
+
   display.textContent = tempDisplay;
 }
 
@@ -109,8 +124,8 @@ function multiply(num1, num2) {
   return num1 * num2;
 }
 function divide(num1, num2) {
-  if(num1==0){
-    return "don't do this"
+  if (num1 == 0) {
+    return "don't do this";
   }
   return num1 / num2;
 }
